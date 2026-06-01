@@ -12,11 +12,11 @@ COPY . /app
 # Upgrade pip
 RUN pip install --upgrade pip
 
-# Install Python dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Hugging Face default port
 EXPOSE 7860
 
-# Start Flask app
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
+# Start Flask server
+CMD ["gunicorn", "--timeout", "600", "--workers", "1", "--threads", "2", "-b", "0.0.0.0:7860", "app:app"]
