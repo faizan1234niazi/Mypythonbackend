@@ -2,6 +2,7 @@ flask
 flask-cors
 transformers
 torch
+sentencepiece
 yt-dlp
 faster-whisper
 deep-translator
