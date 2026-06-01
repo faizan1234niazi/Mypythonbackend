@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
-# Install system dependencies (ffmpeg is REQUIRED)
-RUN apt-get update && apt-get install -y ffmpeg git
+# Install system dependencies
+RUN apt-get update && apt-get install -y ffmpeg git && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
@@ -12,11 +12,11 @@ COPY . /app
 # Upgrade pip
 RUN pip install --upgrade pip
 
-# Install dependencies
-RUN pip install -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
-EXPOSE 8000
+# Hugging Face default port
+EXPOSE 7860
 
-# Start server
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
+# Start Flask app
+CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
